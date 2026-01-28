@@ -62,3 +62,48 @@ class MedicalRecord(models.Model):
 
     def __str__(self):
         return f'Medical Record for {self.patient.user.get_full_name()} created on {self.date_created.strftime("%Y-%m-%d")}'
+
+class PatientMedicalHistory(models.Model):
+    patient = models.OneToOneField(PatientProfile, on_delete=models.CASCADE, related_name='medical_history')
+    
+    # Blood type
+    BLOOD_TYPE_CHOICES = [
+        ('A+', 'A Positive'),
+        ('A-', 'A Negative'),
+        ('B+', 'B Positive'),
+        ('B-', 'B Negative'),
+        ('AB+', 'AB Positive'),
+        ('AB-', 'AB Negative'),
+        ('O+', 'O Positive'),
+        ('O-', 'O Negative'),
+    ]
+    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPE_CHOICES, blank=True, null=True)
+    
+    # Allergies (stored as text, comma-separated or JSON in production)
+    allergies = models.TextField(blank=True, null=True, help_text="List patient allergies (medications, food, etc.)")
+    
+    # Chronic conditions
+    chronic_conditions = models.TextField(blank=True, null=True, help_text="Ongoing medical conditions (diabetes, hypertension, etc.)")
+    
+    # Current medications
+    current_medications = models.TextField(blank=True, null=True, help_text="List of current medications and dosages")
+    
+    # Past surgeries
+    past_surgeries = models.TextField(blank=True, null=True, help_text="History of surgical procedures")
+    
+    personal_history = models.TextField(blank=True, null=True, help_text="if patient drinks alcohol, smokes, etc.")
+    # Family medical history
+    family_history = models.TextField(blank=True, null=True, help_text="Relevant family medical history")
+    
+    # Immunization records
+    immunizations = models.TextField(blank=True, null=True, help_text="Vaccination history")
+    
+    # Additional notes
+    notes = models.TextField(blank=True, null=True, help_text="Any additional medical history notes")
+    
+    # Timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f'Medical History for {self.patient.user.get_full_name()}'

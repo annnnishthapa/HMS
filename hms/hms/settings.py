@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
-
+    'core.apps.CoreConfig',
     'records.apps.RecordsConfig',
     'Encounter.apps.EncounterConfig',
     'billings.apps.BillingsConfig',

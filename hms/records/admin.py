@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ward, Bed, Admission, NurseAssignment, MedicalRecord
+from .models import Ward, Bed, Admission, NurseAssignment, MedicalRecord, PatientMedicalHistory
 
 @admin.register(Ward)
 class WardAdmin(admin.ModelAdmin):
@@ -32,3 +32,30 @@ class MedicalRecordAdmin(admin.ModelAdmin):
     search_fields = ('patient__user__username', 'doctor__user__username', 'diagnosis')
     list_filter = ('date_created', 'last_updated')
     readonly_fields = ('date_created', 'last_updated')
+
+@admin.register(PatientMedicalHistory)
+class PatientMedicalHistoryAdmin(admin.ModelAdmin):
+    list_display = ('patient', 'blood_type', 'created_at', 'updated_at')
+    search_fields = ('patient__user__username', 'allergies', 'chronic_conditions')
+    list_filter = ('blood_type', 'created_at')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Patient', {
+            'fields': ('patient',)
+        }),
+        ('Basic Info', {
+            'fields': ('blood_type',)
+        }),
+        ('Medical Conditions', {
+            'fields': ('allergies', 'chronic_conditions', 'current_medications')
+        }),
+        ('History', {
+            'fields': ('past_surgeries', 'family_history', 'immunizations')
+        }),
+        ('Additional Notes', {
+            'fields': ('personal_history', 'notes',)
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at')
+        }),
+    )

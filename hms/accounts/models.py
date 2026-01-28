@@ -19,6 +19,13 @@ class DoctorProfile(models.Model):
 
 class PatientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    GENDER_CHOICES = [
+        ('FEMALE', 'Female'),
+        ('MALE', 'Male'),
+        ('OTHER', 'Other'),
+        ('UNSPECIFIED', 'Unspecified'),
+    ]
+    gender = models.CharField(max_length=12, choices=GENDER_CHOICES, default='UNSPECIFIED')
     date_of_birth = models.DateField()
     address = models.TextField()
     emergency_contact = models.CharField(max_length=15)

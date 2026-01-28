@@ -3,7 +3,7 @@ from Encounter.models import Encounter
 from accounts.models import PatientProfile
 
 class BillingRecord(models.Model):
-    appointment = models.OneToOneField(Encounter, on_delete=models.CASCADE)
+    encounter = models.OneToOneField(Encounter, on_delete=models.CASCADE)
     patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     billing_date = models.DateTimeField(auto_now_add=True)
