@@ -1,0 +1,185 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Login - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 60vh;">
+        <div class="col-md-6 col-lg-5">
+            <!-- Login Card -->
+            <div class="card shadow-lg" style="border-radius: 15px; border: none;">
+                <!-- Card Header -->
+                <div class="card-header" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); border-radius: 15px 15px 0 0; text-align: center; padding: 2rem;">
+                    <i class="fas fa-hospital" style="font-size: 3rem; color: white; margin-bottom: 1rem; display: block;"></i>
+                    <h3 style="color: white; margin: 0;">Hospital Management System</h3>
+                    <p style="color: rgba(255,255,255,0.8); margin: 0.5rem 0 0 0;">log in to your account</p>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body p-5">
+                    <!-- Error Messages -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <strong>Login Failed!</strong>
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+
+                    <!-- Login Form -->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Username Field -->
+                        <div class="mb-4">
+                            <label for="{{ form.username.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-user"></i> Username
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg {% if form.username.errors %}is-invalid{% endif %}" 
+                                id="{{ form.username.id_for_label }}" 
+                                name="username" 
+                                placeholder="Enter your username"
+                                value="{{ form.username.value|default:'' }}"
+                                required
+                            >
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.username.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="{{ form.password.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            <input 
+                                type="password" 
+                                class="form-control form-control-lg {% if form.password.errors %}is-invalid{% endif %}" 
+                                id="{{ form.password.id_for_label }}" 
+                                name="password" 
+                                placeholder="Enter your password"
+                                required
+                            >
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.password.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Remember Me Checkbox -->
+                        <div class="mb-4 form-check">
+                            <input 
+                                type="checkbox" 
+                                class="form-check-input" 
+                                id="rememberMe" 
+                                name="remember_me"
+                            >
+                            <label class="form-check-label" for="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold mb-3">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </button>
+                    </form>
+
+                    <!-- Divider -->
+                    <hr class="my-4">
+
+                    <!-- Additional Links -->
+                    <div class="text-center">
+                        <p class="text-muted mb-3">
+                            Don't have an account? 
+                            <a href="{% url 'core:register' %}" class="text-primary fw-bold">Create one</a>
+                        </p>
+                        <p class="text-muted mb-0">
+                            <a href="{% url 'core:home'}" class="text-secondary text-decoration-none">Forgot password?</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer" style="background-color: #f8f9fa; border-radius: 0 0 15px 15px; text-align: center; padding: 1.5rem;">
+                    <p class="text-muted small mb-0">
+                        <i class="fas fa-shield-alt"></i> Your login is secure and encrypted
+                    </p>
+                </div>
+            </div>
+
+            <!-- Demo Credentials Info -->
+            <div class="alert alert-info mt-4" role="alert">
+                <h5 class="alert-heading">
+                    <i class="fas fa-info-circle"></i> Demo Credentials
+                </h5>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Doctor:</strong>
+                        <p class="mb-0">Username: <code>doctor1</code></p>
+                        <p>Password: <code>pass123</code></p>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Patient:</strong>
+                        <p class="mb-0">Username: <code>patient1</code></p>
+                        <p>Password: <code>pass123</code></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+    .form-control-lg {
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+    }
+
+    .btn-lg {
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .invalid-feedback {
+        color: #e74c3c;
+        font-size: 0.9rem;
+    }
+
+    code {
+        background-color: #f5f5f5;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        color: #d63384;
+    }
+</style>
+{% endblock %}

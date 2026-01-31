@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Encounter(models.Model):
-    doctor = models.ForeignKey(DoctorProfile, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(DoctorProfile, on_delete= models.SET_NULL, null=True)
     patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE)
     encounter_date = models.DateTimeField()
     reason_for_visit = models.TextField()

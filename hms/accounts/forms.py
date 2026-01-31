@@ -4,7 +4,7 @@ from accounts.models import User, DoctorProfile, PatientProfile, NurseProfile, R
 from datetime import date
 
 
-class UserRegisterForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Enter your email  '}))
     first_name = forms.CharField(
         max_length=30,
@@ -35,7 +35,7 @@ class PatientProfileForm(forms.ModelForm):
         ('OTHER', 'Other'),
         ('UNSPECIFIED', 'Unspecified'),
     ]
-    gendwer = forms.ChoiceField(
+    gender = forms.ChoiceField(
         choices = GENDER_CHOICES,
         widget=forms.Select(attrs={
             'class': 'form-control form-select-lg',})

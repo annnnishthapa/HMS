@@ -49,7 +49,8 @@ class NurseAssignment(models.Model):
          ]
     shift_type = models.CharField(max_length=10, choices=shift_choices)
     def __str__(self):
-        return f'Nurse {self.nurse.user.get_full_name()} assigned to {self.admission.patient.user.get_full_name()}'
+        nurse_name = self.nurse.user.get_full_name() if self.nurse else "Unassigned"
+        return f'Nurse {nurse_name} assigned to {self.admission.patient.user.get_full_name()}'
     
 class MedicalRecord(models.Model):
     patient = models.ForeignKey(PatientProfile, on_delete=models.CASCADE, related_name='medical_records')

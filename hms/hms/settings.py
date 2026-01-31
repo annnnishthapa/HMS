@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'appointments.apps.AppointmentsConfig',
     'accounts.apps.AccountsConfig',
     'core.apps.CoreConfig',
     'records.apps.RecordsConfig',
@@ -121,3 +122,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_REDIRECT_URL = 'core:home'
+LOGOUT_REDIRECT_URL = 'core:home'
+LOGIN_URL = 'core:login'

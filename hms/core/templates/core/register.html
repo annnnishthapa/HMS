@@ -1,0 +1,295 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Register - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <!-- Registration Card -->
+            <div class="card shadow-lg" style="border-radius: 15px; border: none;">
+                <!-- Card Header -->
+                <div class="card-header" style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); border-radius: 15px 15px 0 0; text-align: center; padding: 2rem;">
+                    <i class="fas fa-hospital" style="font-size: 2.5rem; color: white; margin-bottom: 1rem; display: block;"></i>
+                    <h3 style="color: white; margin: 0;">Create Your Account</h3>
+                    <p style="color: rgba(255,255,255,0.8); margin: 0.5rem 0 0 0;">Join HMS - Patient Registration</p>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body p-5">
+                    <!-- Success/Error Messages -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                <i class="fas fa-{% if message.tags == 'success' %}check-circle{% else %}exclamation-circle{% endif %}"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- Registration Form -->
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Account Information Section -->
+                        <h5 class="mb-4 fw-bold" style="color: #2c3e50;">
+                            <i class="fas fa-user-circle"></i> Account Information
+                        </h5>
+
+                        <!-- Username -->
+                        <div class="mb-4">
+                            <label for="{{ user_form.username.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-at"></i> Username
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg {% if user_form.username.errors %}is-invalid{% endif %}" 
+                                id="{{ user_form.username.id_for_label }}" 
+                                name="username" 
+                                placeholder="Choose a unique username"
+                                value="{{ user_form.username.value|default:'' }}"
+                                required
+                            >
+                            {% if user_form.username.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.username.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-4">
+                            <label for="{{ user_form.email.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input 
+                                type="email" 
+                                class="form-control form-control-lg {% if user_form.email.errors %}is-invalid{% endif %}" 
+                                id="{{ user_form.email.id_for_label }}" 
+                                name="email" 
+                                placeholder="Enter your email"
+                                value="{{ user_form.email.value|default:'' }}"
+                                required
+                            >
+                            {% if user_form.email.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.email.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Name Section -->
+                        <h5 class="mb-4 fw-bold" style="color: #2c3e50;">
+                            <i class="fas fa-id-card"></i> Personal Information
+                        </h5>
+
+                        <!-- First Name -->
+                        <div class="mb-4">
+                            <label for="{{ user_form.first_name.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-user"></i> First Name
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg {% if user_form.first_name.errors %}is-invalid{% endif %}" 
+                                id="{{ user_form.first_name.id_for_label }}" 
+                                name="first_name" 
+                                placeholder="Enter your first name"
+                                value="{{ user_form.first_name.value|default:'' }}"
+                                required
+                            >
+                            {% if user_form.first_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.first_name.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="mb-4">
+                            <label for="{{ user_form.last_name.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-user"></i> Last Name
+                            </label>
+                            <input 
+                                type="text" 
+                                class="form-control form-control-lg {% if user_form.last_name.errors %}is-invalid{% endif %}" 
+                                id="{{ user_form.last_name.id_for_label }}" 
+                                name="last_name" 
+                                placeholder="Enter your last name"
+                                value="{{ user_form.last_name.value|default:'' }}"
+                                required
+                            >
+                            {% if user_form.last_name.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.last_name.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="mb-4">
+                            <label for="{{ patient_form.gender.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-venus-mars"></i> Gender
+                            </label>
+                            {{ patient_form.gender }}
+                            {% if patient_form.gender.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in patient_form.gender.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div class="mb-4">
+                            <label for="{{ patient_form.date_of_birth.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-calendar"></i> Date of Birth
+                            </label>
+                            {{ patient_form.date_of_birth }}
+                            {% if patient_form.date_of_birth.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in patient_form.date_of_birth.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="mb-4">
+                            <label for="{{ patient_form.address.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-map-marker-alt"></i> Address
+                            </label>
+                            {{ patient_form.address }}
+                            {% if patient_form.address.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in patient_form.address.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div class="mb-4">
+                            <label for="{{ patient_form.emergency_contact.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-phone"></i> Emergency Contact Number
+                            </label>
+                            {{ patient_form.emergency_contact }}
+                            {% if patient_form.emergency_contact.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in patient_form.emergency_contact.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Password Section -->
+                        <h5 class="mb-4 fw-bold" style="color: #2c3e50;">
+                            <i class="fas fa-lock"></i> Security
+                        </h5>
+
+                        <!-- Password -->
+                        <div class="mb-4">
+                            <label for="{{ user_form.password1.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-key"></i> Password
+                            </label>
+                            {{ user_form.password1 }}
+                            {% if user_form.password1.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.password1.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted d-block mt-2">
+                                <i class="fas fa-info-circle"></i>
+                                Password must be at least 8 characters long and cannot be entirely numeric.
+                            </small>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="mb-4">
+                            <label for="{{ user_form.password2.id_for_label }}" class="form-label fw-bold">
+                                <i class="fas fa-key"></i> Confirm Password
+                            </label>
+                            {{ user_form.password2 }}
+                            {% if user_form.password2.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {% for error in user_form.password2.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+                            <label class="form-check-label" for="termsCheck">
+                                I agree to the Terms and Conditions and Privacy Policy
+                            </label>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold mb-3">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </form>
+
+                    <!-- Divider -->
+                    <hr class="my-4">
+
+                    <!-- Login Link -->
+                    <div class="text-center">
+                        <p class="text-muted">
+                            Already have an account? 
+                            <a href="{% url 'core:login' %}" class="text-primary fw-bold">Sign in here</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer" style="background-color: #f8f9fa; border-radius: 0 0 15px 15px; text-align: center; padding: 1.5rem;">
+                    <p class="text-muted small mb-0">
+                        <i class="fas fa-shield-alt"></i> Your data is secure and encrypted
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+    .form-control-lg,
+    .form-select {
+        border-radius: 8px;
+    }
+
+    .invalid-feedback {
+        color: #e74c3c;
+        font-size: 0.9rem;
+    }
+
+    h5 {
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}
