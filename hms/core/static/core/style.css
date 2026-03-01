@@ -237,3 +237,24 @@ footer a:hover {
         transform: rotate(360deg);
     }
 }
+
+.form-card .card-body {
+    padding: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.form-control,
+.form-select,
+textarea.form-control {
+    border-radius: 8px;
+}
+
+.table-card .table thead th {
+    background-color: var(--light-bg);
+    color: var(--primary-color);
+    border-bottom: 1px solid #dfe6e9;
+}

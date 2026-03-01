@@ -45,6 +45,19 @@
                     </li>
 
                     {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'appointments:appointment_list' %}">
+                                <i class="fas fa-calendar-check"></i> Appointments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'records:medical_history_list' %}">
+                                <i class="fas fa-notes-medical"></i> Records
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-user-circle"></i> {{ user.first_name|default:user.username }}
@@ -70,7 +83,7 @@
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white ms-2" href="#">
+                            <a class="nav-link btn btn-primary text-white ms-2" href="{% url 'core:login' %}">
                                 <i class="fas fa-sign-in-alt"></i> Login
                             </a>
                         </li>

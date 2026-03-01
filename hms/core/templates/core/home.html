@@ -20,10 +20,10 @@
             
             {% if user.is_authenticated %}
                 <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-primary btn-lg">
+                    <a href="{% url 'appointments:create_appointment' %}" class="btn btn-primary btn-lg">
                         <i class="fas fa-calendar-alt"></i> Schedule Appointment
                     </a>
-                    <a href="#" class="btn btn-success btn-lg">
+                    <a href="{% url 'records:medical_history_list' %}" class="btn btn-success btn-lg">
                         <i class="fas fa-folder-open"></i> View Records
                     </a>
                 </div>
@@ -229,7 +229,7 @@
                             <i class="fas fa-user-plus"></i> Create Account
                         </a>
                     {% else %}
-                        <a href="#" class="btn btn-primary btn-lg">
+                        <a href="{% url 'appointments:appointment_list' %}" class="btn btn-primary btn-lg">
                             <i class="fas fa-arrow-right"></i> Go to Dashboard
                         </a>
                     {% endif %}

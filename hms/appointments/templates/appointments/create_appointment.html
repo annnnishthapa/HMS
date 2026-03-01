@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Create Appointment{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card form-card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="fas fa-calendar-plus"></i> Create Appointment</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {% for field in form %}
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Appointment
+                        </button>
+                        <a href="{% url 'appointments:appointment_list' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-list"></i> View Appointments
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Medical History Form{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card form-card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="fas fa-notes-medical"></i> Medical History</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {% for field in form %}
+                            {% if is_patient_user and field.name == 'patient' %}
+                            {% else %}
+                                <div class="col-md-6">
+                                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-4 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Medical History
+                        </button>
+                        <a href="{% url 'records:medical_history_list' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-list"></i> View Histories
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
